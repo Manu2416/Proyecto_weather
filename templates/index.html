@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <h1 class="mb-4  text-center">Proyecto Tiempo</h1>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3 mb-4">
+                    <h5>Gestión de Base de Datos</h5>
+                    <button onclick="enviar('/insertar_paises')" class="btn btn-outline-primary mb-2">Cargar Países</button>
+                    <div id="status_db" class="small"></div>
+                    <h5>Actualizar Temperaturas</h5>
+                    <button onclick="enviar_temps('/insertar_temps')" class="btn btn-outline-primary mb-2">Actualizar Temperaturas</button>
+                    <div id="status_dbi" class="small"></div>
+                    <button onclick="mostrarTablaPaises()" class="btn btn-primary">
+                        Listar Países Guardados
+                    </button>
+                    <div id="zona-tabla" class="mt-4"></div>
+                    
+                </div>
+
+            </div>
+
+            <div class="col-md-8">
+                <div class="card shadow-sm p-4">
+                    <h5>Análisis por País</h5>
+                    <div class="input-group mb-3">
+                        <input type="text" id="paisInput" class="form-control" placeholder="Escribe un país...">
+                        <button onclick="buscar()" class="btn btn-success">Consultar</button>
+                    </div>
+                    <div id="resultado">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function enviar(ruta) {
+            const res = await fetch(ruta, { method: 'POST' });
+            const data = await res.json();
+            document.getElementById('status_db').innerHTML = `<p class="text-info">${data.message}</p>`;
+        }
+
+
+    async function enviar_temps(ruta) {
+        // 1. Primero guardamos el ELEMENTO en la variable
+        const statusDiv = document.getElementById('status_dbi');
+        
+        // 2. Luego cambiamos su contenido
+        statusDiv.innerHTML = '<span class="text-warning">⏳ Actualizando... esto puede tardar unos segundos.</span>';
+
+        try {
+            const res = await fetch(ruta, { method: 'POST' });
+            const data = await res.json();
+            
+            // Ahora esto sí funcionará porque statusDiv es el objeto correcto
+            statusDiv.innerHTML = `<span class="${data.status === 'success' ? 'text-success' : 'text-danger'}">${data.message}</span>`;
+        } catch (error) {
+            statusDiv.innerHTML = '<span class="text-danger">❌ Error de conexión con el servidor</span>';
+        }
+    }
+
+        async function buscar() {
+            const pais = document.getElementById('paisInput').value;
+            const form = new FormData();
+            form.append('pais', pais);
+
+            const res = await fetch('/consultar', { method: 'POST', body: form });
+            const data = await res.json();
+            
+            let html = `<h3>${data.pais}: <span class="badge bg-primary">${data.temperatura}°C</span></h3>`;
+            html += `<hr><h6>Temperaturas en fronteras:</h6><ul class="list-group">`;
+            data.fronteras.forEach(f => {
+                html += `<li class="list-group-item d-flex justify-content-between">${f.nombre} <span>${f.temp}°C</span></li>`;
+            });
+            html += `</ul>`;
+            document.getElementById('resultado').innerHTML = html;
+        }
+
+        async function mostrarTablaPaises() {
+        const zona = document.getElementById('zona-tabla');
+
+    try {
+        // Llamamos a tu ruta de Flask (asegúrate que sea POST como pusiste en Python)
+        const res = await fetch('/ver_paises', { method: 'POST' });
+        const data = await res.json();
+
+        if (data.status === 'success') {
+            let html = `
+                <table class="table table-hover table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Código del País (CCA3)</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            // Usamos forEach para recorrer la lista de strings que envió Flask
+            data.paises.forEach((codigo, indice) => {
+                html += `
+                    <tr>
+                        <td>${indice + 1}</td>
+                        <td><strong>${codigo}</strong></td>
+                    </tr>`;
+            });
+
+            html += `</tbody></table>`;
+            
+            // Si no hay países, mostramos un mensaje
+            
+            zona.innerHTML = html;
+            
+        }
+    } catch (error) {
+        zona.innerHTML = '<div class="alert alert-danger">Error al conectar con el servidor.</div>';
+    }
+}
+    </script>
+</body>
+</html>
