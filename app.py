@@ -60,6 +60,9 @@ def api_consultar():
     
     # Obtener temp principal
     temp_data = visualizar_temperatura(con, pais_buscado)
+    if not temp_data:
+        con.close()
+        return jsonify({"error": "No encontrado"}), 404
     # temp_data es una tupla y le restamos para pasarlo a grados
     temp_valor = round(temp_data[0]-273.15 , 2) if temp_data else "N/A"
     

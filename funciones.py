@@ -10,7 +10,7 @@ def crear_conexion():
         conexion = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="",
+            password="1234",
             database="temperaturas"
         )
         return conexion
@@ -120,7 +120,7 @@ def visualizar_temperatura(conexion, pais):
     
     id_pais = resultado[0]
     
-    # 2. Buscamos la temperatura más reciente
+    # Buscamos la temperatura más reciente
     cursor.execute("SELECT temperatura FROM temperaturas WHERE idpais = %s ORDER BY timestamp DESC LIMIT 1", [id_pais])
     temperatura = cursor.fetchone()
     
