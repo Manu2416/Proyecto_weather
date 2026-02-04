@@ -21,7 +21,7 @@ def api_actualizar_temperaturas():
     try:
         insertar_temps(conexion, paises_json)
         conexion.close()
-        return jsonify({"status": "success", "message": "Temperaturas actualizadas desde OpenWeather (JSON/XML)"})
+        return jsonify({"status": "success", "message": "Temperaturas actualizadas"})
     except Exception as e:
         if conexion: conexion.close()
         return jsonify({"status": "error", "message": f"Error en la API: {str(e)}"})
@@ -34,12 +34,12 @@ def api_paises():
     con.close()
     return jsonify(res)
 
-@app.route('/insertar_fronteras', methods=['POST'])
+@app.route("/insertar_fronteras",methods=["POST"])
 def api_fronteras():
-    con = crear_conexion()
-    paises_json = leer_json()
-    res = insertar_fronteras(con, paises_json)
-    con.close()
+    conexion = crear_conexion()
+    fronteras = leer_json()
+    res = insertar_fronteras(conexion,fronteras)
+    conexion.close()
     return jsonify(res)
 
 @app.route("/ver_paises",methods=["POST"])
@@ -51,6 +51,8 @@ def api_verpaises():
     for fila in cca3:
         lista_paises.append(fila[0])
     return jsonify({"status":"success","paises":lista_paises})
+
+
 
 
 @app.route('/consultar', methods=['POST'])

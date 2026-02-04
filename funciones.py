@@ -71,6 +71,7 @@ def insertar_paises(conexion, lista_paises):
         # Si algo falla devolvemos el error al Front
         return {"status": "error", "message": f"Error crítico al insertar países: {str(e)}"}
 
+
 def insertar_fronteras(conexion, lista_paises):
     cursor = conexion.cursor()
     
@@ -80,9 +81,8 @@ def insertar_fronteras(conexion, lista_paises):
 
     if cantidad > 0:
         cursor.close()
-        # Devolvemos un mensaje y un booleano para que el front sepa qué color poner
-        return {"status": "warning", "message": "Los países ya estaban insertados previamente."}
-
+        
+        return {"status": "error", "message": "Las fronteras ya estaban insertados previamente."}
     try:
         for pais in lista_paises:
             cursor.execute("SELECT idpais FROM paises WHERE cca3 = %s", (pais.get('cca3'),))
@@ -97,7 +97,7 @@ def insertar_fronteras(conexion, lista_paises):
 
         conexion.commit()
         cursor.close()
-        return {"status": "success", "message": "¡Éxito! Fronteras insertadas correctamente."}
+        return {"status": "success", "message": "Fronteras insertadas correctamente."}
     
     except Exception as e:
         return {"status": "error", "message": f"Error al insertar: {str(e)}"}
@@ -125,7 +125,7 @@ def visualizar_temperatura(conexion, pais):
     temperatura = cursor.fetchone()
     
     cursor.close()
-    return temperatura # Devuelve una tupla (25.5,) o None si no hay temperaturas
+    return temperatura # Devuelve una tupla s
 
 def ver_fronteras(conexion,pais):
     #selecciono el id del pais
@@ -174,7 +174,7 @@ def insertar_temps(conexion, paises):
                 atardecer = datetime.fromtimestamp(datos["sys"].get("sunset")).strftime('%Y-%m-%d %H:%M:%S')
         else:
            # USAR XML
-            xml_raw = obtener_clima_xml(latitud, longitud, api_key) #
+            xml_raw = obtener_clima_xml(latitud, longitud, api_key) 
             if xml_raw:
                 root = ET.fromstring(xml_raw)
                 temp = root.find('temperature').get('value')

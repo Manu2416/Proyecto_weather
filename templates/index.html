@@ -2,22 +2,27 @@
 <html>
 <head>
     <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/Weather.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-    <div class="container py-5">
-        <h1 class="mb-4  text-center">Proyecto Tiempo</h1>
+<body >
+    <div class="container-fluid py-5 p-0 m-0">
+        <div class="col-12 title ">
+            <h1 class="mb-4 p-3 text-center proyecto ">Proyecto Tiempo</h1>
+        </div>
         
-        <div class="row">
+        <div class="row p-3 m-4">
             <div class="col-md-4">
-                <div class="card shadow-sm p-3 mb-4">
+                <div class="card  p-3 mb-4">
                     <h5>Gestión de Base de Datos</h5>
-                    <button onclick="enviar('/insertar_paises')" class="btn btn-outline-primary mb-2">Cargar Países</button>
+                    <button onclick="enviar('/insertar_paises')" class="btn mb-2 btn_insertar btn-primary ">Cargar Países</button>
                     <div id="status_db" class="small"></div>
-                    <h5>Actualizar Temperaturas</h5>
-                    <button onclick="enviar_temps('/insertar_temps')" class="btn btn-outline-primary mb-2">Actualizar Temperaturas</button>
+                     <button onclick="enviar_front('/insertar_fronteras')" class=" btn mb-2 btn_insertar btn-primary">Insertar Fronteras</button>
+                    <div id="status_dbf" class="small"></div>
+                    <h5>Temperaturas</h5>
+                    <button onclick="enviar_temps('/insertar_temps')" class=" btn mb-2 btn_insertar btn-primary">Actualizar Temperaturas</button>
                     <div id="status_dbi" class="small"></div>
-                    <button onclick="mostrarTablaPaises()" class="btn btn-primary">
+                    <button onclick="mostrarTablaPaises()" class="mt-2 mb-2 btn btn-primary btn_insertar">
                         Listar Países Guardados
                     </button>
                     <div id="zona-tabla" class="mt-4"></div>
@@ -27,7 +32,7 @@
             </div>
 
             <div class="col-md-8">
-                <div class="card shadow-sm p-4">
+                <div class="card  p-4">
                     <h5>Análisis por País</h5>
                     <div class="input-group mb-3">
                         <input type="text" id="paisInput" class="form-control" placeholder="Escribe un país...">
@@ -45,7 +50,14 @@
         async function enviar(ruta) {
             const res = await fetch(ruta, { method: 'POST' });
             const data = await res.json();
-            document.getElementById('status_db').innerHTML = `<p class="text-info">${data.message}</p>`;
+            document.getElementById('status_db').innerHTML = `<p class="text-success">${data.message}</p>`;
+        }
+        async function enviar_front(ruta) {
+            const res = await fetch(ruta,{method: "POST"})
+            const data = await res.json();
+            document.getElementById('status_dbf').innerHTML = `<p class="text-success">${data.message}</p>`;
+
+            
         }
 
 

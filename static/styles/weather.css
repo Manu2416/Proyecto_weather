@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+.btn_insertar {
+    /* x y desenfoque color */
+     background-color: rebeccapurple !important;
+    color: rgb(255, 255, 255) !important;
+    border-color: rebeccapurple !important; /* También cambiamos el borde para que combine */
+    font-weight: bold;
+}
+
+/* Efecto cuando pasas el ratón por encima */
+.btn_insertar:hover {
+    background-color: rebeccapurple !important;
+    color: rgb(59, 206, 247) !important;
+    box-shadow: 5px 5px rgba(41, 41, 237, 0.5) !important;
+}
+.card{
+     background-color: rgb(110, 205, 252) !important;
+}
+.title {
+    background-image: url('../img/descarga.jpg') !important;
+}
