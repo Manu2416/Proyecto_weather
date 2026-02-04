@@ -72,7 +72,7 @@
             const res = await fetch(ruta, { method: 'POST' });
             const data = await res.json();
             
-            // Ahora esto sí funcionará porque statusDiv es el objeto correcto
+            // depende del status uno u otro
             statusDiv.innerHTML = `<span class="${data.status === 'success' ? 'text-success' : 'text-danger'}">${data.message}</span>`;
         } catch (error) {
             statusDiv.innerHTML = '<span class="text-danger">Error de conexión con el servidor</span>';
@@ -110,8 +110,9 @@
         const zona = document.getElementById('zona-tabla');
 
         try {
-            // Llamamos a tu ruta de Flask (asegúrate que sea POST como pusiste en Python)
+            // Llamamos a tu ruta de Flask de ver paises
             const res = await fetch('/ver_paises', { method: 'POST' });
+            // aqui ya esperamos a q nos de lo serializado
             const data = await res.json();
 
             if (data.status === 'success') {
@@ -136,7 +137,7 @@
 
                 html += `</tbody></table>`;
                 
-                // Si no hay países, mostramos un mensaje
+               
                 
                 zona.innerHTML = html;
                 

@@ -5,7 +5,7 @@ from funciones import (crear_conexion, insertar_paises, insertar_fronteras,
                        ver_fronteras, ver_paises)
 
 app = Flask(__name__)
-
+#el approute es para ejecutar o redirigir
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -13,7 +13,7 @@ def index():
 @app.route('/insertar_temps', methods=['POST'])
 def api_actualizar_temperaturas():
     conexion = crear_conexion()
-    if not conexion:
+    if not conexion:#el json file es como serializar en php 
         return jsonify({"status": "error", "message": "No hay conexio con la base de datos"})
     
     paises_json = leer_json()
@@ -65,7 +65,7 @@ def api_consultar():
     if not temp_data:
         con.close()
         return jsonify({"error": "No encontrado"}), 404
-    # temp_data es una tupla y le restamos para pasarlo a grados
+    # le restamos para pasarlo a grados
     temp_valor = round(temp_data[0]-273.15 , 2) if temp_data else "N/A"
     
     # Obtener fronteras

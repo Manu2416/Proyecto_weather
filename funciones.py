@@ -32,7 +32,7 @@ def insertar_paises(conexion, lista_paises):
             return {"status": "warning", "message": "Los países ya están en la base de datos."}
            
 
-        # Si la tabla está vacía, preparamos la inserción
+        # Si la tabla esta vacia pues lo insertamos 
         consulta = """
             INSERT INTO paises (cca2, cca3, nombre, capital, region, subregion, miembroUE, latitud, longitud) 
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -40,11 +40,11 @@ def insertar_paises(conexion, lista_paises):
 
         for pais in lista_paises:
             # Extracción segura de datos 
-            nombre = pais.get("name", {}).get("common", "Desconocido")
+            nombre = pais.get("name", {}).get("common")
             
         
             capitales = pais.get("capital", [])
-            capital = capitales[0] if capitales else "Sin capital"
+            capital = capitales[0] 
             
             latlng = pais.get("latlng", [None, None])
             latitud = latlng[0]
@@ -68,7 +68,7 @@ def insertar_paises(conexion, lista_paises):
         return {"status": "success", "message": f"Se han insertado {len(lista_paises)} países correctamente."}
 
     except Exception as e:
-        # Si algo falla devolvemos el error al Front
+        # Si algo falla devolvemos el error al front
         return {"status": "error", "message": f"Error crítico al insertar países: {str(e)}"}
 
 
@@ -120,7 +120,7 @@ def visualizar_temperatura(conexion, pais):
     
     id_pais = resultado[0]
     
-    # Buscamos la temperatura más reciente
+    # Buscamos la temperatura mas reciente
     cursor.execute("SELECT temperatura FROM temperaturas WHERE idpais = %s ORDER BY timestamp DESC LIMIT 1", [id_pais])
     temperatura = cursor.fetchone()
     
@@ -161,7 +161,6 @@ def insertar_temps(conexion, paises):
 
    
         if i % 2 == 0:
-    
             datos = obtener_clima(latitud, longitud, api_key) 
             if datos:
                 temp = datos["main"].get("temp")
