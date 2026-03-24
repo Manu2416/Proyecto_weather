@@ -208,6 +208,7 @@ def obtener_clima(lat, lon, api_key):
     else:
         
         return None
+    
 def obtener_clima_xml(lat, lon, api_key):
     url = "https://api.openweathermap.org/data/2.5/weather"
     # Añadimos el parámetro 'mode': 'xml'

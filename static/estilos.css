@@ -1,0 +1,135 @@
+/* Importar una fuente moderna */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --accent-color: #00d2ff;
+    --glass-bg: rgba(255, 255, 255, 0.9);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f2f5;
+  
+    min-height: 100vh;
+    color: #2d3436;
+}
+
+h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: -1px;
+    margin-bottom: 2rem !important;
+}
+
+/* Estilo de Tarjetas Modernas */
+.card {
+    border: none;
+    border-radius: 20px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.card:hover {
+   
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+}
+
+h5 {
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Botones Personalizados */
+.btn {
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: var(--primary-gradient);
+    border: none;
+}
+.btn-primary:hover {
+    background: var(--primary-gradient);
+    opacity: 60%;
+    border: none;
+}
+
+.btn-outline-primary {
+    border: 2px solid #764ba2;
+    color: #764ba2;
+}
+
+.btn-outline-primary:hover {
+    background: var(--primary-gradient);
+    border-color: transparent;
+}
+
+.btn-success {
+    background: #00b894;
+    border: none;
+}
+
+/* Input de búsqueda */
+.form-control {
+    border-radius: 12px 0 0 12px !important;
+    border: 2px solid #e2e8f0;
+    padding: 12px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #667eea;
+}
+
+.input-group .btn {
+    border-radius: 0 12px 12px 0 !important;
+}
+
+/* Listas y Tablas */
+.list-group-item {
+    border: none;
+    margin-bottom: 8px;
+    border-radius: 12px !important;
+    background: #f8fafc;
+    font-weight: 500;
+}
+
+.table {
+    border-radius: 15px;
+    overflow: hidden;
+    border: none;
+}
+
+.table-dark {
+    background: #2d3436;
+}
+
+/* Badge de Temperatura */
+.badge.bg-primary {
+    background: var(--primary-gradient) !important;
+    padding: 8px 15px;
+    font-size: 1rem;
+    border-radius: 10px;
+}
+
+/* Animación de carga */
+#status_dbi span {
+    display: inline-block;
+    padding: 10px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
