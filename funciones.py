@@ -10,7 +10,7 @@ def crear_conexion():
         conexion = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="1234",
+            password="",
             database="temperaturas"
         )
         return conexion
